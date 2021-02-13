@@ -1,13 +1,13 @@
-﻿using CustomerProduct.Common;
+﻿using CustomerProduct.Business.Contracts;
+using CustomerProduct.Common;
 using CustomerProduct.Common.EntityResponseStructure;
-using CustomerProduct.Data.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace CustomerProduct.Data.DataRepositories
+namespace CustomerProduct.Business.Concrete
 {
     public abstract class GenericRepository<T> : IGenericRepository<T>, IDisposable where T : class
     {
@@ -15,7 +15,6 @@ namespace CustomerProduct.Data.DataRepositories
         private readonly ServicePrimitiveResponse _servicePrimitiveResponse;
         private readonly DbContext Context;
         private bool _disposed;
-        //private readonly ILogger _logger = Serilog.Log.ForContext<GenericRepository<T>>();
 
         public GenericRepository(DbContext dbContext)
         {
@@ -40,7 +39,7 @@ namespace CustomerProduct.Data.DataRepositories
             return _serviceEntityResponse;
         }
 
-        public  virtual ServiceEntityResponse<T> FindAllBy(Expression<Func<T, bool>> predicate)
+        public virtual ServiceEntityResponse<T> FindAllBy(Expression<Func<T, bool>> predicate)
         {
             if (Context.Set<T>().Where(predicate).Any())
             {
@@ -197,7 +196,7 @@ namespace CustomerProduct.Data.DataRepositories
             _disposed = true;
         }
 
-      
+
 
         ~GenericRepository()
         {

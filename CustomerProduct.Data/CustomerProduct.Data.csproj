@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CustomerProduct.Data.Contracts\CustomerProduct.Data.Contracts.csproj" />
+    <ProjectReference Include="..\CustomerProduct.Data.Entities\CustomerProduct.Data.Entities.csproj" />
   </ItemGroup>
 
 </Project>

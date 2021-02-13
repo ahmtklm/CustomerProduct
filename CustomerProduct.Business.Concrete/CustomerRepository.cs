@@ -1,8 +1,8 @@
-﻿using CustomerProduct.Data.Contracts;
+﻿using CustomerProduct.Business.Contracts;
 using CustomerProduct.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CustomerProduct.Data.DataRepositories
+namespace CustomerProduct.Business.Concrete
 {
     public class CustomerRepository : GenericRepository<Customer>, ICustomerRepository
     {
@@ -11,6 +11,4 @@ namespace CustomerProduct.Data.DataRepositories
         }
 
     }
-
-
 }

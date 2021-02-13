@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -14,11 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CustomerProduct.Business.Concrete\CustomerProduct.Business.Concrete.csproj" />
     <ProjectReference Include="..\CustomerProduct.Business.Contracts\CustomerProduct.Business.Contracts.csproj" />
-    <ProjectReference Include="..\CustomerProduct.Common\CustomerProduct.Common.csproj" />
-    <ProjectReference Include="..\CustomerProduct.Data\CustomerProduct.Data.csproj" />
   </ItemGroup>
-
 
 </Project>
