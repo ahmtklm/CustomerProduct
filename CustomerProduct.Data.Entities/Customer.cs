@@ -7,7 +7,8 @@ namespace CustomerProduct.Data.Entities
     {
         public Customer()
         {
-            Products = new List<Product>();
+            //Products = new List<Product>();
+            CustomerProduct = new List<CustomerProduct>();
         }
 
         [Key]
@@ -21,7 +22,9 @@ namespace CustomerProduct.Data.Entities
 
         public string Email { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        //public virtual ICollection<Customer> Products { get; set; }
+
+        public virtual ICollection<CustomerProduct> CustomerProduct { get; set; }
 
     }
 }

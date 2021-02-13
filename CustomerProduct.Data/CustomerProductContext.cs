@@ -14,6 +14,7 @@ namespace CustomerProduct.Data
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Entities.CustomerProduct> CustomerProduct { get; set; }
 
     }
 }

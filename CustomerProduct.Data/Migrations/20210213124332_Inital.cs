@@ -27,7 +27,6 @@ namespace CustomerProduct.Data.Migrations
                 {
                     ProductId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdentificationNumber = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(10,4)", nullable: false)
@@ -35,27 +34,55 @@ namespace CustomerProduct.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.ProductId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerProduct",
+                columns: table => new
+                {
+                    CustomerProductId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdentificationNumber = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerProduct", x => x.CustomerProductId);
                     table.ForeignKey(
-                        name: "FK_Products_Customers_IdentificationNumber",
+                        name: "FK_CustomerProduct_Customers_IdentificationNumber",
                         column: x => x.IdentificationNumber,
                         principalTable: "Customers",
                         principalColumn: "IdentificationNumber",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CustomerProduct_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_IdentificationNumber",
-                table: "Products",
+                name: "IX_CustomerProduct_IdentificationNumber",
+                table: "CustomerProduct",
                 column: "IdentificationNumber");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomerProduct_ProductId",
+                table: "CustomerProduct",
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "CustomerProduct");
 
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Products");
         }
     }
 }

@@ -40,6 +40,28 @@ namespace CustomerProduct.Data.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("CustomerProduct.Data.Entities.CustomerProduct", b =>
+                {
+                    b.Property<int>("CustomerProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("IdentificationNumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CustomerProductId");
+
+                    b.HasIndex("IdentificationNumber");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CustomerProduct");
+                });
+
             modelBuilder.Entity("CustomerProduct.Data.Entities.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -50,9 +72,6 @@ namespace CustomerProduct.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdentificationNumber")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(10,4)");
 
@@ -61,23 +80,34 @@ namespace CustomerProduct.Data.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("IdentificationNumber");
-
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("CustomerProduct.Data.Entities.Product", b =>
+            modelBuilder.Entity("CustomerProduct.Data.Entities.CustomerProduct", b =>
                 {
                     b.HasOne("CustomerProduct.Data.Entities.Customer", "Customer")
-                        .WithMany("Products")
+                        .WithMany("CustomerProduct")
                         .HasForeignKey("IdentificationNumber");
 
+                    b.HasOne("CustomerProduct.Data.Entities.Product", "Product")
+                        .WithMany("CustomerProduct")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Customer");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("CustomerProduct.Data.Entities.Customer", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("CustomerProduct");
+                });
+
+            modelBuilder.Entity("CustomerProduct.Data.Entities.Product", b =>
+                {
+                    b.Navigation("CustomerProduct");
                 });
 #pragma warning restore 612, 618
         }

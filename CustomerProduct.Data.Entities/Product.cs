@@ -6,11 +6,17 @@ namespace CustomerProduct.Data.Entities
 {
     public class Product
     {
+
+        public Product()
+        {
+            CustomerProduct = new List<CustomerProduct>();
+        }
+
         [Key]
         public int ProductId { get; set; }
 
-        [ForeignKey("Customer")]
-        public string IdentificationNumber { get; set; }
+        //[ForeignKey("Customer")]
+        //public string IdentificationNumber { get; set; }
 
         public string ProductName { get; set; }
 
@@ -19,7 +25,10 @@ namespace CustomerProduct.Data.Entities
         [Column(TypeName = "decimal(10,4)")]
         public decimal Price { get; set; }
 
-        public virtual Customer Customer { get; set; }
+        //public virtual Customer Customer { get; set; }
+
+
+        public  virtual ICollection<CustomerProduct> CustomerProduct { get; set; }
 
     }
 }
