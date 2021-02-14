@@ -1,6 +1,5 @@
 ﻿using CustomerProduct.Common;
 using CustomerProduct.Common.EntityResponseStructure;
-using CustomerProduct.Data.Entities;
 
 namespace CustomerProduct.Business.Contracts
 {

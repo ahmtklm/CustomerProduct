@@ -1,14 +1,12 @@
 ﻿using CustomerProduct.Business.Contracts;
 using CustomerProduct.Common.EntityResponseStructure;
 using CustomerProduct.Common.Enums;
-using CustomerProduct.Data.Entities;
 using CustomerProduct.Hosting.API.Common;
 using CustomerProduct.Hosting.API.Models.RequestModels;
 using CustomerProduct.Hosting.API.Models.ResponseModels;
 using CustomerProduct.Hosting.API.Validator;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using static CustomerProduct.Common.Enums.Enums;
@@ -46,7 +44,7 @@ namespace CustomerProduct.Hosting.API.Controllers
                 //Check IdentificationNo IsExist
                 bool isExistCustomer = _customerRepository.FindFirstBy(p => p.IdentificationNumber.Equals(request.IdentificationNumber)).ResponseCode == (int)EntityResponseCodes.NoRecordFound;
                 if (isExistCustomer)
-                    return BadRequest(new ApiResponse { Code = (int)ApiResponseCodes.ValidationError, ErrorMessage = " Identification Number Is Not Exist!" });
+                    return BadRequest(new ApiResponse { Code = (int)ApiResponseCodes.ValidationError, ErrorMessage = "Identification Number Is Not Exist!" });
 
                 //Check ProductId IsExist
                 bool isExistProduct = _productRepository.Find(request.ProductId).ResponseCode == (int)EntityResponseCodes.NoRecordFound;
@@ -157,10 +155,6 @@ namespace CustomerProduct.Hosting.API.Controllers
             return BadRequest(GetValidationErrors(results));
 
         }
-
-
-
-
 
     }
 }

@@ -1,5 +1,4 @@
 ﻿using CustomerProduct.Business.Contracts;
-using CustomerProduct.Common;
 using CustomerProduct.Common.EntityResponseStructure;
 using CustomerProduct.Common.Enums;
 using Microsoft.EntityFrameworkCore;

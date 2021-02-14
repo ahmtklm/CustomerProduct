@@ -3,7 +3,6 @@ using CustomerProduct.Common;
 using CustomerProduct.Common.EntityResponseStructure;
 using CustomerProduct.Common.Enums;
 using CustomerProduct.Data;
-using CustomerProduct.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
