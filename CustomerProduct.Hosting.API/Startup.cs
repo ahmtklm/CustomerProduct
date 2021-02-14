@@ -1,13 +1,13 @@
 using CustomerProduct.Business.Concrete;
 using CustomerProduct.Business.Contracts;
 using CustomerProduct.Data;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace CustomerProduct.Hosting.API
 {
@@ -23,6 +23,8 @@ namespace CustomerProduct.Hosting.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc().AddFluentValidation();
+
             services.AddDbContext<CustomerProductContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
@@ -34,6 +36,7 @@ namespace CustomerProduct.Hosting.API
             services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             services.AddScoped<IProductRepository, ProductRepository>();
+
             services.AddScoped<ICustomerProductRepository, CustomerProductRepository>();
         }
 

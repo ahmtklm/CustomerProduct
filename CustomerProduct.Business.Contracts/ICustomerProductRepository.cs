@@ -8,8 +8,6 @@ namespace CustomerProduct.Business.Contracts
     {
         ServicePrimitiveResponse InsertCustomerProduct(string identificationNumber, int productId);
 
-        ServicePrimitiveResponse DeleteCustomerProduct(string identificationNumber, int productId);
-
         ServiceEntityResponse<CustomerProductModel> GetSelectedProductsByIdentificationNumber(string identificationNumber);
     }
 }

@@ -1,12 +1,20 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace CustomerProduct.Hosting.API.Common
 {
     public abstract class IApiResponse
     {
+
+        public IApiResponse() { }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> ValidationErrors { get; set; }
+
+
         public int Code { get; set; }
 
-        public IApiResponse(){}
+        public string ErrorMessage { get; set; }
 
     }
 
