@@ -4,7 +4,7 @@ namespace CustomerProduct.Common.EntityResponseStructure
 {
     public class ServicePrimitiveResponse
     {
-        public string ResponseCode { get; set; }
+        public int ResponseCode { get; set; }
 
         public string ResponseMessage { get; set; }
 

@@ -29,9 +29,12 @@ namespace CustomerProduct.Hosting.API
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-            services.AddTransient<ICustomerRepository, CustomerRepository>();
-            services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<ICustomerProductRepository, CustomerProductRepository>();
+            services.AddScoped<DbContext , CustomerProductContext>();
+
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICustomerProductRepository, CustomerProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

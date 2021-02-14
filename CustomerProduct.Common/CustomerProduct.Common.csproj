@@ -13,4 +13,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CustomerProduct.Data.Entities\CustomerProduct.Data.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

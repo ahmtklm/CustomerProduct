@@ -1,6 +1,7 @@
 ﻿using CustomerProduct.Business.Contracts;
 using CustomerProduct.Common;
 using CustomerProduct.Common.EntityResponseStructure;
+using CustomerProduct.Common.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,11 @@ using System.Linq.Expressions;
 
 namespace CustomerProduct.Business.Concrete
 {
-    public abstract class GenericRepository<T> : IGenericRepository<T>, IDisposable where T : class
+    public class GenericRepository<T> : IGenericRepository<T>, IDisposable where T : class
     {
         private readonly ServiceEntityResponse<T> _serviceEntityResponse;
         private readonly ServicePrimitiveResponse _servicePrimitiveResponse;
-        private readonly DbContext Context;
+        public  DbContext Context;
         private bool _disposed;
 
         public GenericRepository(DbContext dbContext)
@@ -30,11 +31,12 @@ namespace CustomerProduct.Business.Concrete
             if (Context.Set<T>().Any())
             {
                 _serviceEntityResponse.EntityDataList = new List<T>(Context.Set<T>());
-                _serviceEntityResponse.ResponseCode = EntityResponseCodes.Successfull;
+                _serviceEntityResponse.ResponseCode = (int)Enums.EntityResponseCodes.Successfull;
             }
             else
             {
-                _serviceEntityResponse.ResponseCode = EntityResponseCodes.NoRecordFound;
+                _serviceEntityResponse.ResponseCode = (int)Enums.EntityResponseCodes.NoRecordFound;
+                _serviceEntityResponse.ResponseMessage = "No Data Found";
             }
             return _serviceEntityResponse;
         }
@@ -44,11 +46,11 @@ namespace CustomerProduct.Business.Concrete
             if (Context.Set<T>().Where(predicate).Any())
             {
                 _serviceEntityResponse.EntityDataList = Context.Set<T>().Where(predicate).ToList();
-                _serviceEntityResponse.ResponseCode = EntityResponseCodes.Successfull;
+                _serviceEntityResponse.ResponseCode = (int)Enums.EntityResponseCodes.Successfull;
             }
             else
             {
-                _serviceEntityResponse.ResponseCode = EntityResponseCodes.NoRecordFound;
+                _serviceEntityResponse.ResponseCode = (int)Enums.EntityResponseCodes.NoRecordFound;
             }
             return _serviceEntityResponse;
         }
@@ -58,11 +60,11 @@ namespace CustomerProduct.Business.Concrete
             if (Context.Set<T>().FirstOrDefault(predicate) != null)
             {
                 _serviceEntityResponse.EntityData = Context.Set<T>().FirstOrDefault(predicate);
-                _serviceEntityResponse.ResponseCode = EntityResponseCodes.Successfull;
+                _serviceEntityResponse.ResponseCode = (int)Enums.EntityResponseCodes.Successfull;
             }
             else
             {
-                _serviceEntityResponse.ResponseCode = EntityResponseCodes.NoRecordFound;
+                _serviceEntityResponse.ResponseCode = (int)Enums.EntityResponseCodes.NoRecordFound;
             }
             return _serviceEntityResponse;
         }
@@ -72,11 +74,11 @@ namespace CustomerProduct.Business.Concrete
             if (Context.Set<T>().Find(id) != null)
             {
                 _serviceEntityResponse.EntityData = Context.Set<T>().Find(id);
-                _serviceEntityResponse.ResponseCode = EntityResponseCodes.Successfull;
+                _serviceEntityResponse.ResponseCode = (int)Enums.EntityResponseCodes.Successfull;
             }
             else
             {
-                _serviceEntityResponse.ResponseCode = EntityResponseCodes.NoRecordFound;
+                _serviceEntityResponse.ResponseCode = (int)Enums.EntityResponseCodes.NoRecordFound;
             }
             return _serviceEntityResponse;
         }
@@ -90,7 +92,7 @@ namespace CustomerProduct.Business.Concrete
 
                 Context.Set<T>().Add(entity);
                 Context.Entry(entity).State = EntityState.Added;
-                _servicePrimitiveResponse.ResponseCode = EntityResponseCodes.Successfull;
+                _servicePrimitiveResponse.ResponseCode = (int)Enums.EntityResponseCodes.Successfull;
             }
             catch (Exception ex)
             {
@@ -98,7 +100,7 @@ namespace CustomerProduct.Business.Concrete
                     ex = ex.InnerException;
 
                 //_logger.Error(ex, "Repository: {@Repository} | Method: {@Method}", nameof(GenericRepository<T>), System.Reflection.MethodBase.GetCurrentMethod().Name);
-                _servicePrimitiveResponse.ResponseCode = EntityResponseCodes.DbError;
+                _servicePrimitiveResponse.ResponseCode = (int)Enums.EntityResponseCodes.DbError;
                 _servicePrimitiveResponse.InnerException = ex;
             }
             return _servicePrimitiveResponse;
@@ -113,7 +115,7 @@ namespace CustomerProduct.Business.Concrete
 
                 Context.Set<T>().Remove(entity);
                 Context.Entry(entity).State = EntityState.Deleted;
-                _servicePrimitiveResponse.ResponseCode = EntityResponseCodes.Successfull;
+                _servicePrimitiveResponse.ResponseCode = (int)Enums.EntityResponseCodes.Successfull;
             }
             catch (Exception ex)
             {
@@ -122,7 +124,7 @@ namespace CustomerProduct.Business.Concrete
 
                 //_logger.Error(ex, "Repository: {@Repository} | Method: {@Method}", nameof(GenericRepository<T>), System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-                _servicePrimitiveResponse.ResponseCode = EntityResponseCodes.DbError;
+                _servicePrimitiveResponse.ResponseCode = (int)Enums.EntityResponseCodes.DbError;
                 _servicePrimitiveResponse.InnerException = ex;
             }
             return _servicePrimitiveResponse;
@@ -145,7 +147,7 @@ namespace CustomerProduct.Business.Concrete
 
                 //_logger.Error(ex, "Repository: {@Repository} | Method: {@Method}", nameof(GenericRepository<T>), System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-                _servicePrimitiveResponse.ResponseCode = EntityResponseCodes.DbError;
+                _servicePrimitiveResponse.ResponseCode = (int)Enums.EntityResponseCodes.DbError;
                 _servicePrimitiveResponse.InnerException = ex;
             }
         }
@@ -160,7 +162,7 @@ namespace CustomerProduct.Business.Concrete
             try
             {
                 _servicePrimitiveResponse.EntityPrimaryKey = Context.SaveChanges().ToString();
-                _servicePrimitiveResponse.ResponseCode = EntityResponseCodes.Successfull;
+                _servicePrimitiveResponse.ResponseCode = (int)Enums.EntityResponseCodes.Successfull;
             }
             catch (Exception ex)
             {
@@ -169,7 +171,7 @@ namespace CustomerProduct.Business.Concrete
 
                 //_logger.Error(ex, "Repository: {@Repository} | Method: {@Method}", nameof(GenericRepository<T>), System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-                _servicePrimitiveResponse.ResponseCode = EntityResponseCodes.DbError;
+                _servicePrimitiveResponse.ResponseCode = (int)Enums.EntityResponseCodes.DbError;
                 _servicePrimitiveResponse.InnerException = ex;
             }
             return _servicePrimitiveResponse;

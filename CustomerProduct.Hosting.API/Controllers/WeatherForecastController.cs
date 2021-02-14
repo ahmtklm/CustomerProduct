@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CustomerProduct.Hosting.API.Controllers
 {
@@ -31,6 +30,7 @@ namespace CustomerProduct.Hosting.API.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            var custList = _customerRepository.GetAll();
 
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
